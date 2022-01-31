@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SolucaoSemInterface.Entidades.servicos
+﻿namespace SolucaoSemInterface.Entidades.servicos
 {
-    internal class TaxaServico
+    internal class TaxaServico : ITaxaService
     {
-        public double Taxa(double taxa)
+        public double taxa(double taxa)
         {
             if(taxa <= 100)
             {

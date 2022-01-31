@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Globalization;
 using SolucaoSemInterface.Entidades;
 using SolucaoSemInterface.Entidades.servicos;
@@ -24,14 +20,14 @@ namespace SolucaoSemInterface
             DateTime dataRetornoAluguel = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
 
             Console.WriteLine("Preco por hora: ");
-            double hora = double.Parse(Console.ReadLine());
+            double precoHora = double.Parse(Console.ReadLine());
 
             Console.WriteLine("Preco por dia: ");
-            double dia = double.Parse(Console.ReadLine());  
+            double precoDia = double.Parse(Console.ReadLine());  
 
             CarroAlugado carroAlugado = new CarroAlugado(dataAluguel, dataRetornoAluguel, new Veiculo(modeloCarro));
 
-            ServicoAluguel servicoAluguel = new ServicoAluguel(hora, dia);
+            ServicoAluguel servicoAluguel = new ServicoAluguel(precoHora, precoDia, new TaxaServico());
 
             servicoAluguel.processarFatura(carroAlugado);
 

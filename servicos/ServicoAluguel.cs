@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SolucaoSemInterface.Entidades.servicos
 {
@@ -12,16 +8,17 @@ namespace SolucaoSemInterface.Entidades.servicos
         public double precoPorHora { get; private set; }
         public double precoPorDia { get; private set; }
 
-        private TaxaServico taxaServico = new TaxaServico();
-        public ServicoAluguel(double precoPorHora, double precoPorDia)
+        private ITaxaService taxaServico;
+        public ServicoAluguel(double precoPorHora, double precoPorDia, ITaxaService taxaServico)
         {
             this.precoPorHora = precoPorHora;
             this.precoPorDia = precoPorDia;
+            this.taxaServico = taxaServico;
         }
 
         public void processarFatura(CarroAlugado carroAlugado)
         {
-            TimeSpan duracao = carroAlugado.finish.Subtract(carroAlugado.start);
+            TimeSpan duracao = carroAlugado.dataRetornoAluguel.Subtract(carroAlugado.dataAluguel);
 
             double pagamento = 0;
             if(duracao.TotalHours <= 12.0)
@@ -32,7 +29,7 @@ namespace SolucaoSemInterface.Entidades.servicos
                 pagamento = precoPorDia * Math.Ceiling(duracao.TotalDays);
             }
 
-            double taxa = taxaServico.Taxa(pagamento);
+            double taxa = taxaServico.taxa(pagamento);
 
             carroAlugado.fatura = new Fatura(pagamento, taxa);
         }
